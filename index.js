@@ -2,6 +2,7 @@ var color = ["pink", "green", "yellow", "orange", "blue", "red"];
 var greyRandomNum = Math.floor(Math.random() * 25);
 
 var images = document.querySelectorAll(".img");
+var divs = document.querySelectorAll(".box");
 var ans_images = document.querySelectorAll(".ans_img")
 var win_images = document.querySelectorAll(".ans_img");
 var disp = document.getElementById("count");
@@ -62,10 +63,13 @@ function swap(key){
     case 'ArrowUp':
       if(grey_pos > 4){
         count++;
-        var prev_pos = images[grey_pos - 5].getAttribute("src");
-          images[grey_pos - 5].setAttribute("src", "images/grey.jpeg");
-          images[grey_pos].setAttribute("src", prev_pos);
-          grey_pos -= 5;
+        //var prev_pos = images[grey_pos - 5].getAttribute("src");
+          //move(138, 76, grey_pos, grey_pos - 5);
+          //move(138, grey_pos);
+          animate();
+          //images[grey_pos - 5].setAttribute("src", "images/grey.jpeg");
+          //images[grey_pos].setAttribute("src", prev_pos);
+          //grey_pos -= 5;
       }
       break;
 
@@ -83,6 +87,36 @@ function swap(key){
 }
 }
 
+function animate() {
+  var grey_pos = 14;
+  var images = document.querySelectorAll(".img");
+  var box1 = images[grey_pos];
+  var box2 = images[grey_pos-5];
+  box1.keyframes = [{
+      transform: "translate3d(0px, -58px, 0px)"
+  }];
+  box1.animProps = {
+      duration: 500,
+  }
+  box2.keyframes = [{
+      transform: "translate3d(0px, 58px, 0px)"
+  }];
+  box2.animProps = {
+      duration: 500,
+  }
+  var box1src = box1.getAttribute("src");
+  var box2src = box2.getAttribute("src");
+  var animationBox1 = box1.animate(box1.keyframes, box1.animProps).onfinish = function() {
+    updateImage(box1, box2src);
+  };
+  var animationBox2 = box2.animate(box2.keyframes, box2.animProps).onfinish = function() {
+    updateImage(box2, box1src);
+  };
+}
+
+function updateImage(box, src) {
+  box.setAttribute("src", src);
+}
 //checks for the win.
 function check_win(){
   var x = 6;
@@ -97,6 +131,24 @@ function check_win(){
   document.getElementsByTagName("button")[0].style.display = "block";
   stopTimer();
   return true;
+}
+
+//animation
+var id = null;
+function move(pos1, ele1){
+  clearInterval(id);
+  var x = pos1;
+  var a = divs[ele1];
+  id = setInterval(frame, 5);
+  function frame(){
+    if(x == 76){
+      clearInterval(id);
+    }
+    else{
+      x--;
+      a.style.top = x + 'px';
+    }
+  }
 }
 
 //prevent scrolling
