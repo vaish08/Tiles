@@ -5,12 +5,12 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat&family=Courgette&display=swap" rel="stylesheet">
     <title></title>
   </head>
   <body>
     <div class="heading">
-      <h1>T i l e     C o l o r.</h1>
+      <h1 style="margin: auto; padding-bottom: 10px;">T i l e     C o l o r.</h1>
     </div>
 
   <div class="outside">
@@ -33,17 +33,16 @@
   </div>
 
     <h1 id="message" class="text">YOU WIN !!!</h1>
-    <div class="align_button">
+    <div class="align_button wrapper">
        <button onclick="resetTimer(); refreshPage()" class="button button1">Play Again</button>
     </div>
 
+  <div class="big_box">
     <div class="display">
       <h2 class="time" id="stopwatch">Timer: 00:00:00</h2>
-      <h2 class="move">The number of moves is <span id="count"> 0.</span> </h2>
+      <h2 class="move">Moves: <span id="count"> 0</span> </h2>
     </div>
 
-
-  <div class="big_box">
     <div class="container">
     <div class="box"><img class = "img" src = "images/green.jpeg"/></div>
     <div class="box"><img class = "img" src = "images/pink.jpeg"/></div>
@@ -80,9 +79,9 @@
 
     <!-- <button id="refresh" onclick="resetTimer(); refreshPage()"> Restart </button> -->
 
-
-
-
     <script src="index.js" charset="utf-8"></script>
   </body>
+
+  <footer>
+  </footer>
 </html>

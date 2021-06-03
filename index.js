@@ -1,6 +1,7 @@
 var color = ["pink", "green", "yellow", "orange", "blue", "red"];
 var greyRandomNum = Math.floor(Math.random() * 25);
-
+var is_animating = false;
+var time;
 var images = document.querySelectorAll(".img");
 var divs = document.querySelectorAll(".box");
 var ans_images = document.querySelectorAll(".ans_img")
@@ -30,10 +31,8 @@ document.addEventListener("keydown", function(event){
     startTimer();
     swap(button);
     disp.innerHTML = count;
-    check_win();
   }
 })
-
 
 //controls the movement of the grey tile
 function swap(key){
@@ -41,10 +40,11 @@ function swap(key){
     case 'ArrowLeft':
       if(grey_pos % 5 != 0){
         count++;
-        var prev_pos = images[grey_pos - 1].getAttribute("src");
-        images[grey_pos-1].setAttribute("src", "images/grey.jpeg");
-        images[grey_pos].setAttribute("src", prev_pos);
+        if(is_animating) return;
+        is_animating = true;
+        animate(grey_pos, key);
         grey_pos -= 1;
+
       }
       break;
 
@@ -52,9 +52,9 @@ function swap(key){
     case 'ArrowRight':
       if(grey_pos % 5 != 4){
         count++;
-        var prev_pos = images[grey_pos + 1].getAttribute("src");
-        images[grey_pos + 1].setAttribute("src", "images/grey.jpeg");
-        images[grey_pos].setAttribute("src", prev_pos);
+        if(is_animating) return;
+        is_animating = true;
+        animate(grey_pos, key);
         grey_pos += 1;
       }
       break;
@@ -63,13 +63,11 @@ function swap(key){
     case 'ArrowUp':
       if(grey_pos > 4){
         count++;
-        //var prev_pos = images[grey_pos - 5].getAttribute("src");
-          //move(138, 76, grey_pos, grey_pos - 5);
-          //move(138, grey_pos);
-          animate();
-          //images[grey_pos - 5].setAttribute("src", "images/grey.jpeg");
-          //images[grey_pos].setAttribute("src", prev_pos);
-          //grey_pos -= 5;
+        if(is_animating) return;
+        is_animating = true;
+        animate(grey_pos, key);
+          //check_win();
+        grey_pos -= 5;
       }
       break;
 
@@ -78,31 +76,67 @@ function swap(key){
     case 'ArrowDown':
       if(grey_pos < 20){
         count++;
-        var prev_pos = images[grey_pos + 5].getAttribute("src");
-        images[grey_pos + 5].setAttribute("src", "images/grey.jpeg");
-        images[grey_pos].setAttribute("src", prev_pos);
+        if(is_animating) return;
+        is_animating = true;
+        animate(grey_pos, key);
         grey_pos += 5;
       }
     break;
 }
 }
 
-function animate() {
-  var grey_pos = 14;
+//animation
+function animate(pos, key) {  //grey_position, key
+  var grey_pos = pos;
   var images = document.querySelectorAll(".img");
-  var box1 = images[grey_pos];
-  var box2 = images[grey_pos-5];
+  if(key == "ArrowUp"){
+    var box1 = images[grey_pos];
+    var box2 = images[grey_pos-5];
+    var box1_pos_x = 0;
+    var box2_pos_x = 0;
+    var box1_pos_y = -58;
+    var box2_pos_y = 58
+  }
+
+  if(key == "ArrowDown"){
+    var box1 = images[grey_pos];
+    var box2 = images[grey_pos+5];
+    var box1_pos_x = 0;
+    var box2_pos_x = 0;
+    var box1_pos_y = 58;
+    var box2_pos_y = -58
+  }
+
+  if(key == "ArrowLeft"){
+    var box1 = images[grey_pos];
+    var box2 = images[grey_pos-1];
+    var box1_pos_x = -58;
+    var box2_pos_x = 58;
+    var box1_pos_y = 0;
+    var box2_pos_y = 0
+  }
+
+  if(key == "ArrowRight"){
+    var box1 = images[grey_pos];
+    var box2 = images[grey_pos+1];
+    var box1_pos_x = 58;
+    var box2_pos_x = -58;
+    var box1_pos_y = 0;
+    var box2_pos_y = 0
+  }
+
   box1.keyframes = [{
-      transform: "translate3d(0px, -58px, 0px)"
+      transform: "translate3d(" + box1_pos_x + "px, " + box1_pos_y + "px, 0px)",
   }];
   box1.animProps = {
-      duration: 500,
+      duration: 250,
   }
+  play_audio("audios/mixkit-short-transition-sweep-175.wav");
   box2.keyframes = [{
-      transform: "translate3d(0px, 58px, 0px)"
+      transform: "translate3d(" + box2_pos_x + "px, " + box2_pos_y + "px, 0px)"
   }];
   box2.animProps = {
-      duration: 500,
+      duration: 250,
   }
   var box1src = box1.getAttribute("src");
   var box2src = box2.getAttribute("src");
@@ -111,12 +145,14 @@ function animate() {
   };
   var animationBox2 = box2.animate(box2.keyframes, box2.animProps).onfinish = function() {
     updateImage(box2, box1src);
+    check_win();
+    is_animating = false;
   };
 }
-
 function updateImage(box, src) {
   box.setAttribute("src", src);
 }
+
 //checks for the win.
 function check_win(){
   var x = 6;
@@ -127,28 +163,25 @@ function check_win(){
       return;
     }
   }
+  play_audio("audios/mixkit-retro-game-notification-212.wav");
   document.getElementById("message").style.display = "block";
-  document.getElementsByTagName("button")[0].style.display = "block";
+  document.getElementsByTagName("button")[0].style.display = "inline-block";
+  local_storage(count);
   stopTimer();
-  return true;
 }
 
-//animation
-var id = null;
-function move(pos1, ele1){
-  clearInterval(id);
-  var x = pos1;
-  var a = divs[ele1];
-  id = setInterval(frame, 5);
-  function frame(){
-    if(x == 76){
-      clearInterval(id);
-    }
-    else{
-      x--;
-      a.style.top = x + 'px';
-    }
-  }
+//local_storage
+function local_storage(move){
+  var moves = !!localStorage.getItem('rank') ? JSON.parse(localStorage.getItem('rank')) : [];
+  moves.push(move);
+  localStorage.setItem("rank", JSON.stringify(moves));
+  console.log(Math.min(...JSON.parse(localStorage.getItem("rank"))));
+}
+
+//play audio
+function play_audio(src){
+  var audio = new Audio(src);
+  audio.play();
 }
 
 //prevent scrolling
@@ -206,7 +239,6 @@ function timerCycle() {
     if (hr < 10 || hr == 0) {
       hr = '0' + hr;
     }
-
     timer.innerHTML = "Timer: " + hr + ':' + min + ':' + sec;
 
     setTimeout("timerCycle()", 1000);
