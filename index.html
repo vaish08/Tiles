@@ -6,11 +6,12 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat&family=Courgette&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
     <title></title>
   </head>
   <body>
     <div class="heading">
-      <h1 style="margin: auto; padding-bottom: 10px;">T i l e     C o l o r.</h1>
+      <h1 style="margin: auto; padding-bottom: 10px;">Match the Tiles!</h1>
     </div>
 
   <div class="outside">
@@ -34,10 +35,15 @@
 
     <h1 id="message" class="text">YOU WIN !!!</h1>
     <div class="align_button wrapper">
-       <button onclick="resetTimer(); refreshPage()" class="button button1">Play Again</button>
+       <button onclick="resetTimer(); refreshPage();" class="button button1">Play Again</button>
     </div>
 
   <div class="big_box">
+      <div id="list_items" style="width: 300px; background-color: #CDD0CB; margin-left: 50px; float: left; position: relative; display: inline-block; border: 5px solid black">
+        <p>
+          Your top scores.
+        </p>
+      </div>
     <div class="display">
       <h2 class="time" id="stopwatch">Timer: 00:00:00</h2>
       <h2 class="move">Moves: <span id="count"> 0</span> </h2>

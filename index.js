@@ -1,7 +1,7 @@
-var color = ["pink", "green", "yellow", "orange", "blue", "red"];
+  var color = ["pink", "green", "yellow", "orange", "blue", "red"];
 var greyRandomNum = Math.floor(Math.random() * 25);
 var is_animating = false;
-var time;
+var time, flag = false;
 var images = document.querySelectorAll(".img");
 var divs = document.querySelectorAll(".box");
 var ans_images = document.querySelectorAll(".ans_img")
@@ -39,10 +39,10 @@ function swap(key){
   switch(key){
     case 'ArrowLeft':
       if(grey_pos % 5 != 0){
-        count++;
         if(is_animating) return;
         is_animating = true;
         animate(grey_pos, key);
+        count++;
         grey_pos -= 1;
 
       }
@@ -51,10 +51,10 @@ function swap(key){
 
     case 'ArrowRight':
       if(grey_pos % 5 != 4){
-        count++;
         if(is_animating) return;
         is_animating = true;
         animate(grey_pos, key);
+        count++;
         grey_pos += 1;
       }
       break;
@@ -62,10 +62,10 @@ function swap(key){
 
     case 'ArrowUp':
       if(grey_pos > 4){
-        count++;
         if(is_animating) return;
         is_animating = true;
         animate(grey_pos, key);
+        count++;
           //check_win();
         grey_pos -= 5;
       }
@@ -75,10 +75,10 @@ function swap(key){
 
     case 'ArrowDown':
       if(grey_pos < 20){
-        count++;
         if(is_animating) return;
         is_animating = true;
         animate(grey_pos, key);
+        count++;
         grey_pos += 5;
       }
     break;
@@ -173,24 +173,42 @@ function check_win(){
 //local_storage
 function local_storage(move){
   var moves = !!localStorage.getItem('rank') ? JSON.parse(localStorage.getItem('rank')) : [];
-  moves.push(move);
-  localStorage.setItem("rank", JSON.stringify(moves));
-  console.log(Math.min(...JSON.parse(localStorage.getItem("rank"))));
+  for(var i = 0; i < moves.length; i++){
+    if(moves[i] == move){
+      flag = true;
+      break;
+    }
+  }
+  if(flag != true){
+    moves.push(move);
+    moves.sort(function(a, b){return a-b});
+    localStorage.setItem("rank", JSON.stringify(moves));
+    //print_moves(JSON.parse(localStorage.getItem("rank")));
+  }
 }
+
+//to print the list_items
+function print_moves(array){
+  var x = document.getElementById("list_items");
+
+  var ol = document.createElement('ol');
+
+  for(var i = 0; i < array.length; i++){
+    var li = document.createElement('li');
+    li.innerHTML = array[i];
+    ol.appendChild(li);
+  }
+  x.appendChild(ol);
+}
+
+// to-call always on refreshPage
+//window.onload = print_moves(JSON.parse(localStorage.getItem("rank")));
 
 //play audio
 function play_audio(src){
   var audio = new Audio(src);
   audio.play();
 }
-
-//prevent scrolling
-window.addEventListener("keydown", function(e) {
-    if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
-        e.preventDefault();
-    }
-}, false);
-
 
 // creating timer
 const timer = document.getElementById('stopwatch');
@@ -257,3 +275,11 @@ function resetTimer() {
 function refreshPage(){
   window.location.reload();
 }
+print_moves(JSON.parse(localStorage.getItem("rank")));
+
+//prevent scrolling
+window.addEventListener("keydown", function(e) {
+    if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
+        e.preventDefault();
+    }
+}, false);
