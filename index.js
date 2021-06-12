@@ -1,4 +1,4 @@
-  var color = ["pink", "green", "yellow", "orange", "blue", "red"];
+var color = ["pink", "green", "yellow", "orange", "blue", "red"];
 var greyRandomNum = Math.floor(Math.random() * 25);
 var is_animating = false;
 var time, flag = false;
@@ -8,21 +8,30 @@ var ans_images = document.querySelectorAll(".ans_img")
 var win_images = document.querySelectorAll(".ans_img");
 var disp = document.getElementById("count");
 var grey_pos, count = 0;
+var img = [];
 
-// for(var i = 0; i < ans_images.length; i++){
-//   if(i != greyRandomNum){
-//     var randomNum = Math.floor(Math.random() * 6);
-//     ans_images[i].setAttribute("src", "images/" + color[randomNum] + ".jpeg");
-//   }
-// }
-
-for(var i = 0; i < images.length; i++){
-  var image = images[i];
-  var curr_img = image.getAttribute("src");
-  if(curr_img == 'images/grey.jpeg'){
-    grey_pos = i;
+//creates answer box
+for(var i = 0; i < ans_images.length; i++){
+  if(i != greyRandomNum){
+    var randomNum = Math.floor(Math.random() * 6);
+    ans_images[i].setAttribute("src", "images/" + color[randomNum] + ".jpeg");
+    var random_big_box = Math.floor(Math.random() * 25);
+    images[random_big_box].setAttribute("src", "images/" + color[randomNum] + ".jpeg");
+    img.push(random_big_box);
   }
 }
+
+//creates the game board
+images[greyRandomNum].setAttribute("src", "images/black.jpeg");
+for(var i = 0; i < divs.length; i++){
+  var k = img.includes(i);
+  if(i != greyRandomNum && k == false){
+    var randomNum = Math.floor(Math.random() * 6);
+    images[i].setAttribute("src", "images/" + color[randomNum] + ".jpeg");
+  }
+}
+
+grey_pos = greyRandomNum;
 
 //inputs the keypressed
 document.addEventListener("keydown", function(event){
@@ -165,7 +174,7 @@ function check_win(){
   }
   play_audio("audios/mixkit-retro-game-notification-212.wav");
   document.getElementById("message").style.display = "block";
-  document.getElementsByTagName("button")[0].style.display = "inline-block";
+  document.getElementsByTagName("button")[2].style.display = "inline-block";
   local_storage(count);
   stopTimer();
 }
@@ -270,6 +279,29 @@ function resetTimer() {
     sec = 0;
     min = 0;
   }
+
+//Instruction button.
+var modal = document.getElementsByClassName("modal")[0];
+var btn = document.getElementsByClassName("button2")[0];
+var span = document.getElementsByClassName("close")[0];
+btn.onclick = function(){
+  modal.style.display =  "block";
+}
+span.onclick = function(){
+  modal.style.display = "none";
+}
+
+//LeaderBoard button
+var modal1 = document.querySelectorAll(".modal")[1];
+var btn1 = document.querySelectorAll(".button3")[0];
+var span1 = document.querySelectorAll(".close")[1];
+btn1.onclick = function(){
+  modal1.style.display =  "block";
+}
+span1.onclick = function(){
+  modal1.style.display = "none";
+}
+
 
 // to refresh page
 function refreshPage(){

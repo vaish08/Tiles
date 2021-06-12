@@ -7,11 +7,43 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat&family=Courgette&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
-    <title></title>
+    <title>Tile Color.</title>
+    <link rel = "shortcut icon" type = "image/jpg" href = "favicon/favicon.ico" />
   </head>
   <body>
     <div class="heading">
-      <h1 style="margin: auto; padding-bottom: 10px;">Match the Tiles!</h1>
+      <button class="button2" type="button" name="button">INSTRUCTION</button>
+      <button class="button3" type="button" name="button">LEADERBOARD</button>
+      <h1 style="margin: auto; padding-bottom: 10px;">Match the Tiles!
+      </h1>
+    </div>
+
+    <div class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>INSTRUCTIONS !!!</h2>
+        <p>
+          1. Given 3 X 3 tile. Your goal is to try and make this in the center of 5 X 5 grid.<br/>
+          2. Use Arrow keys to navigate the tiles. <br />
+          3. Black tile is the empty title. <br />
+          4. Scores will be based on the number of moves. <br  />
+          5. See your top scores in the leaderboard section. <br  />
+
+          <p style="line-height: 1.8">
+            Good Luck ! 🙂
+          </p>
+        </p>
+      </div>
+
+    </div>
+
+    <div class="modal">
+      <div class="modal-content" id="list_items" style="width: 300px; background-color: #CDD0CB; position: relative; border: 5px solid black">
+        <span class="close">&times;</span>
+        <p class="score_heading">
+           Your top scores.
+        </p>
+      </div>
     </div>
 
   <div class="outside">
@@ -39,15 +71,12 @@
     </div>
 
   <div class="big_box">
-      <div id="list_items" style="width: 300px; background-color: #CDD0CB; margin-left: 50px; float: left; position: relative; display: inline-block; border: 5px solid black">
-        <p>
-          Your top scores.
-        </p>
-      </div>
+
     <div class="display">
       <h2 class="time" id="stopwatch">Timer: 00:00:00</h2>
       <h2 class="move">Moves: <span id="count"> 0</span> </h2>
     </div>
+
 
     <div class="container">
     <div class="box"><img class = "img" src = "images/green.jpeg"/></div>
@@ -67,7 +96,7 @@
     <div class="box"><img class = "img" src = "images/green.jpeg"/></div>
     <div class="box"><img class = "img" src = "images/orange.jpeg"/></div>
     <div class="box"><img class = "img" src = "images/blue.jpeg"/></div>
-    <div class="box"><img class = "img" src = "images/grey.jpeg"/></div>
+    <div class="box"><img class = "img" src = "images/black.jpeg"/></div>
 
     <div class="box"><img class = "img" src = "images/orange.jpeg"/></div>
     <div class="box"><img class = "img" src = "images/yellow.jpeg"/></div>
@@ -81,9 +110,9 @@
     <div class="box"><img class = "img" src = "images/blue.jpeg"/></div>
     <div class="box"><img class = "img" src = "images/orange.jpeg"/></div>
     </div>
-  </div>
 
-    <!-- <button id="refresh" onclick="resetTimer(); refreshPage()"> Restart </button> -->
+
+  </div>
 
     <script src="index.js" charset="utf-8"></script>
   </body>
