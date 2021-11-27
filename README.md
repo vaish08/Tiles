@@ -10,4 +10,4 @@ This is a simple Javascript game.
 5. See your top scores in the leaderboard section.
 Good Luck ! 🙂
 
-<h3>Website: </h3><span><a href="https://vaish08.github.io/tiles/">Match the tiles</a></span>
+<span><h3>Website: </h3><a href="https://vaish08.github.io/tiles/">Match the tiles</a></span>
