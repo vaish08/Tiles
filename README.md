@@ -9,3 +9,5 @@ This is a simple Javascript game.
 4. Scores will be based on the number of moves.
 5. See your top scores in the leaderboard section.
 Good Luck ! 🙂
+
+<h3>Website: </h3><a>https://vaish08.github.io/tiles/</a>
